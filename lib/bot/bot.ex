@@ -1,8 +1,41 @@
-defmodule BotHandler do
-  @behaviour Telegram.Bot
+defmodule Bot.Handler do
+  @bot :bot
 
-  @impl Telegram.Bot
-  def handle_update(%{"message" => message} = _arg, _token) do
-    Task.async(fn -> BotResponse.maybe_send_message(message) end)
+  use ExGram.Bot,
+    name: @bot,
+    setup_commands: true
+
+  command("start")
+  command("help", description: "Print the bot's help")
+
+  middleware(ExGram.Middleware.IgnoreUsername)
+
+  def bot(), do: @bot
+
+  def handle({:command, :start, _msg}, context) do
+    answer(context, "Oh my god hi!")
+  end
+
+  def handle({:command, :help, _msg}, context) do
+    answer(context, "Here is your help:")
+  end
+
+  def handle({:update, update}, context) do
+    # case Nitter.from
+    answer(context, "Here is your update:")
+  end
+
+  def handle(arg_1 = {:text, text, _message}, arg_2 = context) do
+    case Nitter.from_twitter(text) do
+      {:error, :twitter_url_not_found} ->
+        nil
+
+      nitter_url ->
+        answer(
+          context,
+          "Pero usá nitter, pedazo de virgo \n" <>
+            nitter_url
+        )
+    end
   end
 end

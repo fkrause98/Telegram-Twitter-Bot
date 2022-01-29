@@ -23,7 +23,11 @@ defmodule Bot.MixProject do
   def deps do
     [
       {:lettuce, "~> 0.1.0", only: :dev},
-      {:telegram, git: "https://github.com/visciang/telegram.git", tag: "0.8.0"}
+      # {:telegram, git: "https://github.com/visciang/telegram.git", tag: "0.8.0"},
+      {:ex_gram, "~> 0.26"},
+      {:tesla, "~> 1.2"},
+      {:hackney, "~> 1.12"},
+      {:jason, ">= 1.0.0"}
     ]
   end
 end
