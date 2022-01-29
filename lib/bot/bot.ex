@@ -16,13 +16,8 @@ defmodule Bot.Handler do
     answer(context, "Oh my god hi!")
   end
 
-  def handle({:command, :help, _msg}, context) do
-    answer(context, "Here is your help:")
-  end
-
-  def handle({:update, update}, context) do
-    # case Nitter.from
-    answer(context, "Here is your update:")
+  def handle({:location, location}, context) do
+    answer(context, "Doxxeado, lince")
   end
 
   def handle({:text, text, _message}, context) do
@@ -33,9 +28,11 @@ defmodule Bot.Handler do
       nitter_url ->
         answer(
           context,
-          "Pero usá nitter, pedazo de virgo \n" <>
+          "Usá nitter, pedazo de virgo \n" <>
             nitter_url
         )
     end
   end
+
+  def handle(_, _), do: nil
 end
