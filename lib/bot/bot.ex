@@ -25,7 +25,7 @@ defmodule Bot.Handler do
     answer(context, "Here is your update:")
   end
 
-  def handle(arg_1 = {:text, text, _message}, arg_2 = context) do
+  def handle({:text, text, _message}, context) do
     case Nitter.from_twitter(text) do
       {:error, :twitter_url_not_found} ->
         nil

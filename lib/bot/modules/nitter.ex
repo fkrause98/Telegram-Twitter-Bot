@@ -20,7 +20,13 @@ defmodule Nitter do
   defp scan_and_get_urls(text) do
     Regex.scan(@url_regex, text)
     |> Enum.map(&hd/1)
+    |> reject_if_fx()
     |> Enum.map(&URI.parse/1)
+  end
+
+  defp reject_if_fx(urls) when is_list(urls) do
+    urls
+    |> Enum.reject(fn url -> String.contains?("fxtwitter.com") end)
   end
 
   defp urls_to_nitter(urls) when is_list(urls) do
