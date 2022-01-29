@@ -26,7 +26,7 @@ defmodule Nitter do
 
   defp reject_if_fx(urls) when is_list(urls) do
     urls
-    |> Enum.reject(fn url -> String.contains?("fxtwitter.com") end)
+    |> Enum.reject(fn url -> url |> String.contains?("fxtwitter.com") end)
   end
 
   defp urls_to_nitter(urls) when is_list(urls) do
