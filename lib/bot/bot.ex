@@ -5,27 +5,22 @@ defmodule Bot.Handler do
     name: @bot,
     setup_commands: true
 
-  command("start")
-  command("help", description: "Print the bot's help")
+  command("help", description: "Just send me a valid twitter URL")
   command("ping", description: "Pong")
 
   middleware(ExGram.Middleware.IgnoreUsername)
 
   def bot(), do: @bot
 
-  def handle({:command, :start, _msg}, context) do
-    answer(context, "Oh my god hi!")
-  end
-
   def handle({:command, :ping, _msg}, context) do
     answer(context, "Pong")
   end
 
-  def handle({:location, location}, context) do
+  def handle({:location, _location}, context) do
     answer(context, "Doxxeado, lince")
   end
 
-  def handle({:message, message}, context) do
+  def handle({:message, _message}, context) do
     answer(context, "Te respondo, lince")
   end
 
@@ -37,7 +32,7 @@ defmodule Bot.Handler do
       nitter_url ->
         answer(
           context,
-          "Usá nitter, pedazo de virgo \n" <>
+          "Usá nitter, capo \n" <>
             nitter_url
         )
     end
