@@ -7,6 +7,7 @@ defmodule Bot.Handler do
 
   command("start")
   command("help", description: "Print the bot's help")
+  command("ping", description: "Pong")
 
   middleware(ExGram.Middleware.IgnoreUsername)
 
@@ -14,6 +15,10 @@ defmodule Bot.Handler do
 
   def handle({:command, :start, _msg}, context) do
     answer(context, "Oh my god hi!")
+  end
+
+  def handle({:command, :ping, _msg}, context) do
+    answer(context, "Pong")
   end
 
   def handle({:location, location}, context) do
