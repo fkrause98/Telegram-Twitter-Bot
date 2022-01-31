@@ -3,7 +3,7 @@ defmodule Nitter do
   def from_twitter(text) do
     cond do
       contains_twitter_url?(text) ->
-        text |> scan_and_get_urls |> urls_to_nitter |> maybe_remove_query
+        text |> scan_and_get_urls |> filter_non_twitter |> urls_to_nitter |> maybe_remove_query
 
       true ->
         {:error, :twitter_url_not_found}
@@ -20,13 +20,12 @@ defmodule Nitter do
   defp scan_and_get_urls(text) do
     Regex.scan(@url_regex, text)
     |> Enum.map(&hd/1)
-    |> reject_if_fx()
     |> Enum.map(&URI.parse/1)
   end
 
-  defp reject_if_fx(urls) when is_list(urls) do
+  defp filter_non_twitter(urls) when is_list(urls) do
     urls
-    |> Enum.reject(fn url -> url |> String.contains?("fxtwitter.com") end)
+    |> Enum.reject(fn %URI{host: url_host} -> url_host != "twitter.com" end)
   end
 
   defp urls_to_nitter(urls) when is_list(urls) do
