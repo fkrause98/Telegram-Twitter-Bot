@@ -25,6 +25,10 @@ defmodule Bot.Handler do
     answer(context, "Doxxeado, lince")
   end
 
+  def handle({:message, message}, context) do
+    answer(context, "Te respondo, lince")
+  end
+
   def handle({:text, text, _message}, context) do
     case Nitter.from_twitter(text) do
       {:error, :twitter_url_not_found} ->
